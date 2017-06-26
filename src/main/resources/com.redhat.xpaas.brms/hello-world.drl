@@ -1,9 +1,14 @@
 package com.redhat.xpaas.brms
 
+import org.yaml.snakeyaml.Yaml
+
 rule "Greet the world"
     when
         $name: String()
         not String(this != $name)
     then
-        insert("Hello world from " + $name + "!");
+    	Yaml yaml = new Yaml();
+    	Object obj = yaml.load("a: 1\nb: 2\nc:\n  - aaa\n  - bbb");
+    	String hello = "Hello yaml: " + obj.toString();
+        insert(hello);
 end
